@@ -19,7 +19,7 @@ influx:
 	docker run -d -p 8083:8083 -p 8086:8086 \
 	-e INFLUXDB_DB="gpudata" \
 	-e INFLUXDB_USER="masalvar" \
-	-e NFLUXDB_USER_PASSWORD="password" \
+	-e INFLUXDB_USER_PASSWORD="password" \
 	-v $(PWD):/var/lib/influxdb \
 	-e INFLUXDB_ADMIN_ENABLED=true \
 	--name influxdb \
