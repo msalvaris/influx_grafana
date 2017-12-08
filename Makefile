@@ -4,26 +4,38 @@ SHELL := /bin/bash
 define PROJECT_HELP_MSG
 Usage:
 	make help                           show this message
+	make run							start influx container and grafana container
 endef
 export PROJECT_HELP_MSG
 
+INFLUXDB_DB?=gpudata
+INFLUXDB_USER?=admin
+INFLUXDB_USER_PASSWORD?=password
+GF_ADMIN_PASSWORD?=secret
+
+INFLUX_DB_PORT?=8083
+GF_PORT?=3000
+INFLUXDB_LOCATION?=$(PWD)
 
 help:
 	@echo "$$PROJECT_HELP_MSG" | less
 
 run: influx grafana
 	@echo "InfluxDB and Grafana started"
+	@echo "Influx DB $(INFLUXDB_DB) set up waiting on port $(INFLUX_DB_PORT)"
+	@echo "Grafana set up and waiting on port $(GF_PORT)"
 
 
 influx:
-	docker run -d -p 8083:8083 -p 8086:8086 \
-	-e INFLUXDB_DB="gpudata" \
-	-e INFLUXDB_USER="masalvar" \
-	-e INFLUXDB_USER_PASSWORD="password" \
-	-v $(PWD):/var/lib/influxdb \
+	docker run -d -p $(INFLUX_DB_PORT):$(INFLUX_DB_PORT) -p 8086:8086 \
+	-e INFLUXDB_DB=$(INFLUXDB_DB) \
+	-e INFLUXDB_USER=$(INFLUXDB_USER) \
+	-e INFLUXDB_USER_PASSWORD=$(INFLUXDB_USER_PASSWORD) \
+	-v $(INFLUXDB_LOCATION):/var/lib/influxdb \
 	-e INFLUXDB_ADMIN_ENABLED=true \
 	--name influxdb \
 	influxdb
+	@echo "Influx DB $(INFLUXDB_DB) set up waiting on port $(INFLUX_DB_PORT)"
 
 
 grafana:
@@ -33,11 +45,11 @@ grafana:
 	# start grafana
 	docker run \
 	  -d \
-	  -p 3000:3000 \
+	  -p $(GF_PORT):$(GF_PORT) \
 	  --name=grafana \
 	  --volumes-from grafana-storage \
 	  --link influxdb:influxdb \
-	  -e GF_SECURITY_ADMIN_PASSWORD=secret \
+	  -e GF_SECURITY_ADMIN_PASSWORD=%(GF_ADMIN_PASSWORD) \
 	  grafana/grafana
-
+	@echo "Grafana set up and waiting on port $(GF_PORT)"
 .PHONY: help
