@@ -5,6 +5,8 @@ define PROJECT_HELP_MSG
 Usage:
 	make help                           show this message
 	make run							start influx container and grafana container
+	make stop							stop all containers
+	make clean							stop and remove all containers, delete data and docker images
 endef
 export PROJECT_HELP_MSG
 
@@ -52,4 +54,11 @@ grafana:
 	  -e GF_SECURITY_ADMIN_PASSWORD=%(GF_ADMIN_PASSWORD) \
 	  grafana/grafana
 	@echo "Grafana set up and waiting on port $(GF_PORT)"
-.PHONY: help
+
+stop:
+	docker stop influxdb grafana-storage grafana
+
+clean: stop
+	docker rm -v influxdb grafana-storage grafana
+
+.PHONY: help run
