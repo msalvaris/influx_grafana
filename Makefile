@@ -51,7 +51,7 @@ grafana:
 	  --name=grafana \
 	  --volumes-from grafana-storage \
 	  --link influxdb:influxdb \
-	  -e GF_SECURITY_ADMIN_PASSWORD=%(GF_ADMIN_PASSWORD) \
+	  -e GF_SECURITY_ADMIN_PASSWORD=$(GF_ADMIN_PASSWORD) \
 	  grafana/grafana
 	@echo "Grafana set up and waiting on port $(GF_PORT)"
 
