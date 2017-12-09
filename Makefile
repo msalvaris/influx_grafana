@@ -6,6 +6,7 @@ Usage:
 	make help                           show this message
 	make run							start influx container and grafana container
 	make stop							stop all containers
+	make start							restart all stopped containers
 	make clean							stop and remove all containers, delete data and docker images
 endef
 export PROJECT_HELP_MSG
