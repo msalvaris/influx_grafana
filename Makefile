@@ -63,6 +63,7 @@ stop:
 
 clean: stop
 	docker rm -v influxdb grafana-storage grafana
+	rm -r data meta wal
 
 remove: clean
 	docker rmi influxdb grafana/grafana
