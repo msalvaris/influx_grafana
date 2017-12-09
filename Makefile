@@ -55,10 +55,17 @@ grafana:
 	  grafana/grafana
 	@echo "Grafana set up and waiting on port $(GF_PORT)"
 
+start:
+	docker start influxdb grafana-storage grafana
+
 stop:
 	docker stop influxdb grafana-storage grafana
 
 clean: stop
 	docker rm -v influxdb grafana-storage grafana
+
+remove: clean
+	docker rmi influxdb grafana/grafana
+
 
 .PHONY: help run
