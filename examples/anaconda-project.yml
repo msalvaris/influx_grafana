@@ -40,7 +40,7 @@ downloads: {}
 # before your code runs.
 # Use `anaconda-project add-packages` to add packages.
 #
-packages: [python=3.6, ipython, jupyter, ipykernel, requests]
+packages: [python=3.6, ipython, jupyter, ipykernel, requests, pytz]
 #
 # In the channels section, list any Conda channel URLs to be searched
 # for packages.
