@@ -57,4 +57,4 @@ channels: []
 # but can have its own unique ones also.
 # Use `anaconda-project add-env-spec` to add environment specs.
 #
-env_specs: {default: {packages: [{pip: [influxdb]}], channels: []}}
+env_specs: {default: {packages: [{pip: [influxdb==5.0.0]}], channels: []}}
