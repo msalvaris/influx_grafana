@@ -53,6 +53,7 @@ grafana:
 	  --volumes-from grafana-storage \
 	  --link influxdb:influxdb \
 	  -e GF_SECURITY_ADMIN_PASSWORD=$(GF_ADMIN_PASSWORD) \
+	  -e "GF_INSTALL_PLUGINS=grafana-azure-monitor-datasource,briangann-gauge-panel,natel-plotly-panel" \
 	  grafana/grafana
 	@echo "Grafana set up and waiting on port $(GF_PORT)"
 
